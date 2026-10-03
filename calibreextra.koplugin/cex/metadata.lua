@@ -34,6 +34,10 @@ local used_metadata = {
 
 local function slim_user_metadata(user_metadata)
     local slim_metadata = rapidjson.object({})
+    if not user_metadata then
+        return slim_metadata
+    end
+
     for key, data in pairs(user_metadata) do
         local slim_field = rapidjson.object({})
         slim_field.name = data.name
