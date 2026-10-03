@@ -295,10 +295,16 @@ function CalibreMetadata:getBookId(index)
         book[key] = self.books[index][key]
     end
 
+    local full_path = self.path .. "/" .. book.lpath
+
     local read_field = G_reader_settings:readSetting("calibreextra_read_field")
     if read_field then
-        local full_path = self.path .. "/" .. book.lpath
         book["_is_read_"] = BookList.getBookStatus(full_path) == "complete"
+    end
+
+    local rating = BookList.getBookInfo(full_path).rating
+    if rating ~= nil then
+        book["rating"] = rating
     end
 
     return book
